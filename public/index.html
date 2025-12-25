@@ -1,68 +1,75 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>big dan's blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body data-page="index">
-  <!-- WELCOME (EVERY VISIT) -->
-  <section id="welcome-layer" class="welcome-root">
-    <div class="welcome-panel">
-      <h1 class="welcome-title">big dan's blog</h1>
-      <p class="welcome-subtitle">unfiltered takes on film &amp; tv</p>
-      <p class="welcome-body">
-        welcome! this is a small corner of the internet where dan keeps track
-        of what he’s watching—the films, series, and moments that stand out.
-        glad you're here.
-      </p>
-      <button id="enterButton" class="button-primary">
-        enter
-      </button>
-    </div>
-  </section>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>big dan's blog</title>
 
-  <!-- MAIN APP: ABOUT + REVIEWS -->
-  <div id="app-layer" class="page-root hidden">
-    <header>
-      <div class="header-top">
-        <div>
-          <h1 class="site-title">big dan's blog</h1>
-          <p class="site-tagline">unfiltered takes on film &amp; tv</p>
-        </div>
+    <!-- global styles -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <!-- data-page used for page-specific logic/styles -->
+  <body data-page="index">
+    <!-- welcome overlay -->
+    <section id="welcome-layer" class="welcome-root">
+      <div class="welcome-panel">
+        <h1 class="welcome-title">big dan's blog</h1>
+        <p class="welcome-subtitle">unfiltered takes on film &amp; tv</p>
+
+        <p class="welcome-body">
+          welcome! this is a small corner of the internet where dan keeps track
+          of what he’s watching—the films, series, and moments that stand out.
+          glad you're here.
+        </p>
+
+        <button id="enterButton" class="button-primary">enter</button>
       </div>
-      <nav>
-        <button class="tab-button active" data-target="about">about</button>
-        <button class="tab-button" data-target="reviews">reviews</button>
+    </section>
 
-        <span class="nav-spacer"></span>
-
-        <a href="admin.html" class="tab-link">admin</a>
-      </nav>
-    </header>
-
-    <main>
-      <section id="about" class="panel">
-        <h2>about</h2>
-        <div class="about-body">
-          <p id="about-text"></p>
-          <p id="about-status" class="about-status"></p>
+    <!-- main app -->
+    <div id="app-layer" class="page-root hidden">
+      <header>
+        <div class="header-top">
+          <div>
+            <h1 class="site-title">big dan's blog</h1>
+            <p class="site-tagline">unfiltered takes on film &amp; tv</p>
+          </div>
         </div>
-      </section>
 
-      <section id="reviews" class="panel hidden">
-        <h2>reviews</h2>
-        <div id="posts"></div>
-      </section>
-    </main>
+        <!-- primary navigation -->
+        <nav>
+          <button class="tab-button active" data-target="about">about</button>
+          <button class="tab-button" data-target="reviews">reviews</button>
 
-    <footer>
-      built by aidan · for dan
-    </footer>
-  </div>
+          <span class="nav-spacer"></span>
 
-  <!-- Firebase + logic -->
-  <script type="module" src="app.js"></script>
-</body>
+          <a href="admin.html" class="tab-link">admin</a>
+        </nav>
+      </header>
+
+      <main>
+        <!-- about tab -->
+        <section id="about" class="panel">
+          <h2>about</h2>
+
+          <div class="about-body">
+            <p id="about-text"></p>
+            <p id="about-status" class="about-status"></p>
+          </div>
+        </section>
+
+        <!-- reviews tab -->
+        <section id="reviews" class="panel hidden">
+          <h2>reviews</h2>
+          <div id="posts"></div>
+        </section>
+      </main>
+
+      <footer>built by aidan · for dan</footer>
+    </div>
+
+    <!-- app logic -->
+    <script type="module" src="app.js"></script>
+  </body>
 </html>

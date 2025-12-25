@@ -1,23 +1,31 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Big Dan's Blog · Post</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body data-page="post">
-  <div class="page-root">
-    <header>
-      <h1 class="site-title">big dan's blog</h1>
-      <p class="site-tagline">unfiltered takes on film &amp; tv</p>
-      <a href="index.html#reviews" class="back-link">← back to reviews</a>
-    </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>big dan's blog · post</title>
 
-    <main id="content">
-      <p class="message">Loading post…</p>
-    </main>
-  </div>
-  <script type="module" src="app.js"></script>
-</body>
+    <!-- global styles -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <!-- single post view -->
+  <body data-page="post">
+    <div class="page-root">
+      <header>
+        <h1 class="site-title">big dan's blog</h1>
+        <p class="site-tagline">unfiltered takes on film &amp; tv</p>
+
+        <!-- return to reviews tab -->
+        <a href="index.html#reviews" class="back-link">← back to reviews</a>
+      </header>
+
+      <main id="content">
+        <p class="message">Loading post…</p>
+      </main>
+    </div>
+
+    <!-- app logic -->
+    <script type="module" src="app.js"></script>
+  </body>
 </html>
