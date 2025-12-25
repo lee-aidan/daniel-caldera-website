@@ -74,7 +74,7 @@ body[data-page="admin"] .button {
 
 Firebase is used to support two core parts of the application: authentication and content persistence. Rather than acting as a generic backend, Firebase enables the site owner to securely manage content through the admin interface while keeping the public site read-only.
 
-#### Authentication
+### Authentication
 
 Firebase Authentication is used to restrict access to the admin interface. Only an authenticated user can create, edit, or delete content. The admin page checks authentication state on load and conditionally reveals editing controls once a valid session is established. This allows Daniel to manage the site without exposing the underlying source code or deployment setup.
 
@@ -95,7 +95,7 @@ onAuthStateChanged(auth, (user) => {
 ```
 This approach cleanly separates who can write from who can read, without adding unnecessary complexity.
 
-#### Databases (Firestore)
+### Databases (Firestore)
 
 Firebase Firestore is used to persist all site content, including blog posts and the "about" page bio. Posts are stored as documents in a collection, while the bio text is stored as a single document. This allows all public-facing content to be updated dynamically without redeploying the site.
 
@@ -116,10 +116,31 @@ onSnapshot(q, (snapshot) => {
 
 This real-time listener keeps the UI in sync with the database and avoids manual refresh logic.
 
+---
 
+## Movie Poster Fetching (TMDB)
 
+To enhance each review visually without adding extra work for the site owner, the app automatically fetches movie or TV posters using The Movie Database (TMDB) API. When creating or editing a post, the admin enters the title of a movie or show. The application then queries TMDB, selects the most relevant result, and attaches the poster URL to the post before saving it.
 
+The logic is written to tolerate small variations in titles and to fail gracefully if no poster is found. The fetching logic is designed to tolerate small variations in titles and to fail gracefully if no match is found. If the API does not return a valid result, the post still saves and renders correctly without a poster image. Once a poster is attached, its URL is persisted with the review data, ensuring that the visual remains stable over time. This prevents existing posts from changing unexpectedly if TMDB updates or releases new artwork, such as a new season poster, allowing each review to retain the poster that was originally selected.
 
+#### from `app.js` (poster fetch logic):
 
+```js
+const response = await fetch(
+  `https://api.themoviedb.org/3/search/multi?query=${encodeURIComponent(title)}&api_key=${TMDB_KEY}`
+);
+
+const data = await response.json();
+const posterPath = data.results?.[0]?.poster_path || null;
+```
+
+This feature was a natural way for me to apply my informatics background while learning JavaScript, translating structured user input into a reliable query against an external data source and integrating the result directly into the application workflow. It allowed me to practice working with external APIs in a way that emphasized robustness while keeping the admin experience simple and intuitive.
+
+---
+
+## tl;dr
+
+Big Dan’s Blog is a full-stack web application for publishing movie and television reviews, featuring a public blog and a secure admin interface for content management. Built from scratch using vanilla HTML, CSS, JavaScript, and Firebase, the project emphasizes clean front-end architecture, authenticated editing workflows, persistent data storage, and external API integration for poster fetching. This project was developed as a real-world learning exercise in end-to-end web development and system design.
 
 
