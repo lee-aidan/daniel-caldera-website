@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>big dan's blog · admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="admin">
+  <div class="page">
+    <header class="admin-header">
+      <h1>big dan's blog · admin</h1>
+      <!-- sign out bubble, only visible when signed in -->
+      <button id="logout-button" class="button button-secondary hidden" type="button">
+        sign out
+      </button>
+    </header>
+
+    <!-- login -->
+    <section class="card hidden" id="login-section">
+      <h2 style="font-size:16px; margin:0 0 8px;">sign in</h2>
+      <form id="login-form">
+        <div class="field">
+          <label for="login-email">email</label>
+          <input id="login-email" type="email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="login-password">password</label>
+          <input id="login-password" type="password" autocomplete="current-password" required />
+        </div>
+        <button type="submit" class="button">sign in</button>
+        <div id="login-message"></div>
+      </form>
+    </section>
+    <p class="logged-in-note" id="user-info"></p>
+
+    <!-- about page editor -->
+    <section class="card hidden" id="about-section">
+      <h2 style="font-size:16px; margin:0 0 8px;">edit about page</h2>
+      <form id="about-form">
+        <div class="field">
+          <label for="about-content">about text</label>
+          <textarea
+            id="about-content"
+            placeholder="write the about page text here..."
+            required
+          ></textarea>
+        </div>
+        <button type="submit" class="button">save about page</button>
+        <div id="about-message"></div>
+      </form>
+    </section>
+
+    <!-- reviews -->
+    <section class="card hidden" id="post-section">
+      <h2 style="font-size:16px; margin:0 0 8px;">new review</h2>
+      <form id="post-form">
+        <div class="field">
+          <label for="post-title">title</label>
+          <input id="post-title" type="text" placeholder="review title" required />
+        </div>
+
+        <div class="field">
+          <label for="post-media-title">film / show title (for poster)</label>
+          <input
+            id="post-media-title"
+            type="text"
+            placeholder="e.g. Regular Show"
+          />
+        </div>
+
+        <div class="field">
+          <label for="post-content">content</label>
+          <textarea
+            id="post-content"
+            placeholder="thoughts, reactions, notes..."
+            required
+          ></textarea>
+        </div>
+
+        <div class="actions-row">
+          <button type="submit" class="button" id="post-submit-button">
+            publish review
+          </button>
+          <!-- bubble-style cancel button, shown only while editing -->
+          <button
+            type="button"
+            class="button button-secondary hidden"
+            id="cancel-edit-button"
+          >
+            cancel edit
+          </button>
+        </div>
+
+        <div id="post-message"></div>
+      </form>
+
+      <div class="post-list" id="post-list"></div>
+    </section>
+
+  </div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

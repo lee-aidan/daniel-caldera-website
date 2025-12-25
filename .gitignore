@@ -1,0 +1,60 @@
+## logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+firebase-debug.log*
+firebase-debug.*.log*
+
+## firebase local artifacts
+.firebase/
+.firebaserc.*.json
+
+## mac
+.ds_store
+.DS_Store
+**/.ds_store
+**/.DS_Store
+.localized
+__macosx/
+
+## runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+## coverage
+coverage
+.nyc_output
+
+## tool caches
+.grunt
+.npm
+.eslintcache
+.node_repl_history
+.yarn-integrity
+
+## deps
+node_modules/
+bower_components/
+
+## build outputs
+build/
+build/release
+lib-cov
+
+## packages
+*.tgz
+
+## env
+.env
+.env.*
+!.env.example
+
+## dataconnect
+.dataconnect
+
+## archives
+*.zip

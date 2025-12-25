@@ -1,0 +1,502 @@
+/* ===== admin.html styles ===== */
+body[data-page="admin"] {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "SF Pro Display", "Segoe UI", sans-serif;
+      color: #111111;
+      background: #fafafa;
+    
+}body[data-page="admin"] * {
+      box-sizing: border-box;
+    
+}body[data-page="admin"] {
+      margin: 0;
+      padding: 24px 16px 40px;
+      background: #fafafa;
+      -webkit-font-smoothing: antialiased;
+      color: #111111;
+    
+}body[data-page="admin"] .page {
+      max-width: 720px;
+      margin: 0 auto;
+    
+}body[data-page="admin"] /* top header */
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e3e3e3;
+      margin-bottom: 8px;
+    
+}body[data-page="admin"] h1 {
+      font-size: 24px;
+      margin: 0;
+    
+}body[data-page="admin"] .subtitle {
+      margin: 0 0 24px;
+      font-size: 13px;
+      color: #666666;
+    
+}body[data-page="admin"] .card {
+      padding: 16px 0;
+      border-top: 1px solid #e3e3e3;
+      margin-top: 16px;
+    
+}body[data-page="admin"] label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px;
+    
+}body[data-page="admin"] input[type="email"],
+    body[data-page="admin"] input[type="password"],
+    body[data-page="admin"] input[type="text"],
+    body[data-page="admin"] textarea {
+      width: 100%;
+      max-width: 100%;
+      padding: 8px 10px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: 1px solid #d4d4d4;
+      background: #ffffff;
+    
+}body[data-page="admin"] textarea {
+      min-height: 140px;
+      resize: vertical;
+    
+}body[data-page="admin"] .field {
+      margin-bottom: 12px;
+    
+}body[data-page="admin"] .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 1px solid #111111;
+      background: #111111;
+      color: #fafafa;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.1s ease, transform 0.08s ease;
+    
+}body[data-page="admin"] .button:hover {
+      background: #000000;
+      transform: translateY(-1px);
+    
+}body[data-page="admin"] .button:active {
+      transform: translateY(0);
+    
+}body[data-page="admin"] /* secondary pill (for cancel edit & sign out) */
+    .button-secondary {
+      background: #ffffff;
+      color: #111111;
+    
+}body[data-page="admin"] .button-secondary:hover {
+      background: #f4f4f4;
+      transform: translateY(-1px);
+    
+}body[data-page="admin"] .error {
+      color: #b91c1c;
+      font-size: 13px;
+      margin-top: 6px;
+    
+}body[data-page="admin"] .success {
+      color: #166534;
+      font-size: 13px;
+      margin-top: 6px;
+    
+}body[data-page="admin"] .logged-in-note {
+      font-size: 13px;
+      color: #555555;
+      margin: 8px 0 16px;
+    
+}body[data-page="admin"] .hidden {
+      display: none !important;
+    
+}body[data-page="admin"] /* button row under the review form */
+    .actions-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 4px;
+      margin-bottom: 4px;
+    
+}body[data-page="admin"] /* post list */
+    .post-list {
+      margin-top: 16px;
+      border-top: 1px solid #e3e3e3;
+      padding-top: 12px;
+    
+}body[data-page="admin"] .post-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 6px 0;
+      border-bottom: 1px solid #f0f0f0;
+    
+}body[data-page="admin"] .post-row-main {
+      flex: 1;
+      min-width: 0;
+    
+}body[data-page="admin"] .post-row-title {
+      font-size: 14px;
+      margin: 0 0 2px;
+    
+}body[data-page="admin"] .post-row-title span.pinned-badge {
+      font-size: 11px;
+      text-transform: lowercase;
+      letter-spacing: 0.04em;
+      padding-left: 6px;
+      color: #777777;
+    
+}body[data-page="admin"] .post-row-meta {
+      font-size: 11px;
+      color: #777777;
+      margin: 0;
+    
+}body[data-page="admin"] .post-row-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      white-space: nowrap;
+    
+}body[data-page="admin"] .small-button {
+      border: none;
+      background: transparent;
+      padding: 0;
+      font-size: 12px;
+      color: #5555aa;
+      cursor: pointer;
+    
+}body[data-page="admin"] .small-button:hover {
+      text-decoration: underline;
+    
+}body[data-page="admin"] .delete-button {
+      border: none;
+      background: transparent;
+      font-size: 12px;
+      color: #b91c1c;
+      cursor: pointer;
+      padding: 0;
+    
+}body[data-page="admin"] .delete-button:hover {
+      text-decoration: underline;
+    
+}
+
+/* ===== index.html styles ===== */
+body[data-page="index"] {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF pro text",
+        "SF pro display", "segoe ui", sans-serif;
+      color: #111111;
+      background: #fafafa; /* lighter off-white */
+    
+}body[data-page="index"] * {
+      box-sizing: border-box;
+    
+}body[data-page="index"] {
+      margin: 0;
+      padding: 0;
+      background: #fafafa; /* lighter off-white everywhere */
+      -webkit-font-smoothing: antialiased;
+      color: #111111; /* all text black-ish */
+    
+}body[data-page="index"] .hidden {
+      display: none !important;
+    
+}body[data-page="index"] /* WELCOME (EVERY VISIT) */
+    .welcome-root {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    
+}body[data-page="index"] .welcome-panel {
+      max-width: 540px;
+      width: 100%;
+      background: transparent;
+      border-radius: 0;
+      border: none;
+      padding: 24px 0;
+      text-align: left;
+    
+}body[data-page="index"] .welcome-title {
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: lowercase;
+      margin: 0 0 8px;
+    
+}body[data-page="index"] .welcome-subtitle {
+      margin: 0 0 20px;
+      color: #111111;
+      font-size: 15px;
+    
+}body[data-page="index"] .welcome-body {
+      margin: 0 0 16px;
+      color: #111111;
+      font-size: 15px;
+      line-height: 1.6;
+      text-align: justify;
+    
+}body[data-page="index"] .welcome-meta {
+      margin: 0 0 20px;
+      color: #555555;
+      font-size: 13px;
+    
+}body[data-page="index"] .button-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 1px solid #111111;
+      background: #111111;
+      color: #fafafa;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.1s ease, color 0.1s ease, transform 0.08s ease;
+    
+}body[data-page="index"] .button-primary:hover {
+      background: #000000;
+      transform: translateY(-1px);
+    
+}body[data-page="index"] .button-primary:active {
+      transform: translateY(0);
+    
+}body[data-page="index"] /* MAIN APP */
+    .page-root {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px 40px;
+    
+}body[data-page="index"] header {
+      margin-bottom: 10px;
+      border-bottom: 1px solid #e3e3e3;
+      padding-bottom: 8px;
+    
+}body[data-page="index"] .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+    
+}body[data-page="index"] .site-title {
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: lowercase;
+      margin: 0;
+      text-align: left;
+    
+}body[data-page="index"] .site-tagline {
+      margin: 4px 0 0;
+      color: #444444;
+      font-size: 14px;
+    
+}body[data-page="index"] /* TABS – text only,
+    body[data-page="index"] no bubbles */
+    nav {
+      margin-top: 24px;
+      padding-bottom: 2px;
+      display: flex;
+      gap: 16px;
+      background: transparent;
+      align-items: flex-end;
+    
+}body[data-page="index"] .tab-button,
+    body[data-page="index"] .tab-link {
+      border: none;
+      background: transparent;
+      padding: 0 0 4px;
+      border-radius: 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: #777777;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 0.1s ease, border-color 0.1s ease;
+    
+}body[data-page="index"] .tab-button.active {
+      color: #000000;
+      border-bottom-color: #000000;
+    
+}body[data-page="index"] .tab-button:hover,
+    body[data-page="index"] .tab-link:hover {
+      color: #000000;
+      border-bottom-color: #000000;
+    
+}body[data-page="index"] .nav-spacer {
+      flex: 1;
+    
+}body[data-page="index"] .tab-link {
+      text-decoration: none;
+    
+}body[data-page="index"] main {
+      display: block;
+    
+}body[data-page="index"] .panel {
+      background: transparent;
+      border-radius: 0;
+      border: none;
+      padding: 8px 0 0;
+      margin-bottom: 16px;
+    
+}body[data-page="index"] /* ABOUT */
+    #about h2,
+    body[data-page="index"] #reviews h2 {
+      margin: 4px 0 6px;
+      font-size: 18px;
+      font-weight: 600;
+      text-transform: lowercase;
+    
+}body[data-page="index"] .about-body p {
+      margin: 6px 0;
+      font-size: 14px;
+      color: #111111;
+      line-height: 1.6;
+      white-space: pre-wrap; /* keep newlines from Firestore */
+    
+}body[data-page="index"] #about-text {
+    text-align: justify;
+    
+}body[data-page="index"] .about-status {
+      margin: 6px 0;
+      font-size: 13px;
+      color: #777777;
+    
+}body[data-page="index"] /* REVIEWS */
+    .post-card {
+      border: none;
+      border-radius: 0;
+      padding: 8px 0 10px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #e5e5e5;
+    
+}body[data-page="index"] .post-title {
+      margin: 0 0 4px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #000000;
+    
+}body[data-page="index"] .post-title a.post-link {
+      text-decoration: none;
+      color: inherit;
+    
+}body[data-page="index"] .post-title a.post-link:hover {
+      text-decoration: underline;
+    
+}body[data-page="index"] .post-meta {
+      margin: 0 0 6px;
+      font-size: 11px;
+      color: #777777;
+    
+}body[data-page="index"] .empty-message {
+      margin: 10px 0 0;
+      font-size: 13px;
+      color: #777777;
+    
+}body[data-page="index"] footer {
+      margin-top: 24px;
+      font-size: 12px;
+      color: #777777;
+      text-align: left;
+      padding-top: 8px;
+      border-top: 1px solid #e3e3e3;
+    
+}
+
+/* ===== post.html styles ===== */
+body[data-page="post"] {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "SF Pro Display", "Segoe UI", sans-serif;
+      color: #111111;
+      background: #fafafa;
+    
+}body[data-page="post"] * {
+      box-sizing: border-box;
+    
+}body[data-page="post"] {
+      margin: 0;
+      padding: 24px 16px 40px;
+      background: #fafafa;
+      -webkit-font-smoothing: antialiased;
+      color: #111111;
+    
+}body[data-page="post"] .page-root {
+      max-width: 720px;
+      margin: 0 auto;
+    
+}body[data-page="post"] header {
+      margin-bottom: 24px;
+      border-bottom: 1px solid #e3e3e3;
+      padding-bottom: 12px;
+    
+}body[data-page="post"] .site-title {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: lowercase;
+      margin: 0;
+    
+}body[data-page="post"] .site-tagline {
+      margin: 4px 0 0;
+      color: #444444;
+      font-size: 13px;
+    
+}body[data-page="post"] .back-link {
+      display: inline-flex;
+      align-items: center;
+      font-size: 13px;
+      margin-top: 12px;
+      text-decoration: none;
+      color: #555555;
+    
+}body[data-page="post"] .back-link:hover {
+      text-decoration: underline;
+    
+}body[data-page="post"] main {
+      padding-top: 12px;
+    
+}body[data-page="post"] .post-title {
+      margin: 0 0 6px;
+      font-size: 22px;
+      font-weight: 600;
+    
+}body[data-page="post"] .post-meta {
+      margin: 0 0 16px;
+      font-size: 12px;
+      color: #777777;
+    
+}body[data-page="post"] /* poster */
+    .post-poster-wrapper {
+      margin: 0 auto 16px;   /* center + spacing */
+      max-width: 260px;      /* shrink overall size */
+    
+}body[data-page="post"] .post-poster {
+      width: 100%;           /* fills the wrapper, not the page */
+      display: block;
+      border-radius: 8px;
+      aspect-ratio: 2 / 3;
+      object-fit: cover;
+    
+}body[data-page="post"] .post-body {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      text-align: justify;
+    
+}body[data-page="post"] .message {
+      font-size: 14px;
+      color: #777777;
+      margin-top: 16px;
+    
+}
