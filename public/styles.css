@@ -51,6 +51,7 @@
 
 [data-page="admin"] #logout-button {
   margin-left: auto;
+  margin-top: -3px;
 }
 
 [data-page="admin"] .subtitle {
