@@ -32,7 +32,7 @@
   position: relative;
   display: block;
   margin: 0;
-  padding: 0;
+  padding: 2px 0 0;
   border: 0;
 }
 
@@ -70,14 +70,14 @@
 
 [data-page="admin"] .card {
   /* match index panel spacing (avoid double rule under header) */
-  padding: 8px 0 0;
+  padding: 12px 0 0;
   margin: 0 0 16px;
 }
 
-[data-page="admin"] #about-section,
+[data-page="admin"] #about-section,q
 [data-page="admin"] #post-section {
   padding-top: 16px;
-  margin-top: 8px;
+  margin-top: 20px;
   border-top: 1px solid #e3e3e3;
 }
 
@@ -177,7 +177,7 @@
 }
 
 [data-page="admin"] .admin-header-copy .logged-in-note {
-  margin: 4px 0 0;
+  margin: 8px 0 0;
 }
 
 [data-page="admin"] #user-info:empty {
@@ -413,7 +413,7 @@ body[data-page="index"] .panel {
 body[data-page="index"] #about h2,
 body[data-page="index"] #reviews h2,
 body[data-page="index"] .tab-panel-title {
-  margin: 4px 0 6px;
+  margin: 0;
   font-size: 18px;
   font-weight: 600;
   text-transform: lowercase;
@@ -428,7 +428,11 @@ body[data-page="index"] .about-body p {
 }
 
 body[data-page="index"] .about-body {
-  margin-top: 12px;
+  margin-top: 8px;
+}
+
+body[data-page="index"] .about-body p:first-child {
+  margin-top: 0;
 }
 
 body[data-page="index"] #about-text {
@@ -471,13 +475,22 @@ body[data-page="index"] .post-meta {
 }
 
 body[data-page="index"] .empty-message {
-  margin: 10px 0 0;
+  margin: 0;
   font-size: 13px;
   color: #777777;
 }
 
 body[data-page="index"] #posts {
-  margin-top: 12px;
+  margin-top: 0;
+}
+
+body[data-page="index"] #posts > .empty-message {
+  margin-top: 8px;
+}
+
+body[data-page="index"] #posts > .post-card:first-child {
+  margin-top: 8px;
+  padding-top: 0;
 }
 
 body[data-page="index"] footer {

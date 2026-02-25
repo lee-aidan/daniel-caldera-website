@@ -613,6 +613,12 @@ function runIndexPage() {
     setActiveTab(defaultTab);
   }
 
+  function updateTabHash(tabName) {
+    const nextHash = tabName === "about" ? "" : `#${tabName}`;
+    const nextUrl = `${window.location.pathname}${window.location.search}${nextHash}`;
+    window.history.replaceState(null, "", nextUrl);
+  }
+
   // initial view based on url hash
   if (window.location.hash === "#reviews") {
     showAppLayer("reviews");
@@ -627,8 +633,7 @@ function runIndexPage() {
     btn.addEventListener("click", () => {
       const target = btn.dataset.target;
       setActiveTab(target);
-      window.location.hash =
-        target === "about" ? "" : target;
+      updateTabHash(target);
     });
   });
 }
