@@ -56,7 +56,10 @@
           <div data-page="admin" class="admin-embedded-root">
             <div class="page">
               <header class="admin-header">
-                <h2 class="admin-title">admin</h2>
+                <div class="admin-header-copy">
+                  <h2 class="admin-title">admin</h2>
+                  <p class="logged-in-note" id="user-info"></p>
+                </div>
                 <button
                   id="logout-button"
                   class="button button-secondary hidden"
@@ -92,8 +95,6 @@
                   <div id="login-message"></div>
                 </form>
               </section>
-
-              <p class="logged-in-note" id="user-info"></p>
 
               <section class="card hidden" id="about-section">
                 <h2 class="section-title">edit about page</h2>

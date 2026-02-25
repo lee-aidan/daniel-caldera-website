@@ -38,6 +38,13 @@
   border: 0;
 }
 
+[data-page="admin"] .admin-header-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
 [data-page="admin"] .admin-header h1,
 [data-page="admin"] .admin-header h2.admin-title {
   font-size: 18px;
@@ -165,6 +172,14 @@
   font-size: 13px;
   color: #555555;
   margin: 4px 0 16px;
+}
+
+[data-page="admin"] .admin-header-copy .logged-in-note {
+  margin: 4px 0 0;
+}
+
+[data-page="admin"] #user-info:empty {
+  display: none;
 }
 
 [data-page="admin"] .hidden {
