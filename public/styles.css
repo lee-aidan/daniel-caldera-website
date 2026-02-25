@@ -30,18 +30,19 @@
 /* top header */
 [data-page="admin"] .admin-header {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   gap: 10px;
-  margin: 0 0 4px;
+  margin: 0;
   padding: 0;
   border: 0;
 }
 
-[data-page="admin"] .admin-header h1 {
-  font-size: 28px;
+[data-page="admin"] .admin-header h1,
+[data-page="admin"] .admin-header h2.admin-title {
+  font-size: 18px;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0;
   text-transform: lowercase;
   margin: 0;
   line-height: 1;
@@ -162,7 +163,7 @@
 [data-page="admin"] .logged-in-note {
   font-size: 13px;
   color: #555555;
-  margin: 8px 0 16px;
+  margin: 4px 0 16px;
 }
 
 [data-page="admin"] .hidden {

@@ -82,7 +82,6 @@ function runAdminPage() {
   const loginSection = document.getElementById("login-section");
   const postSection = document.getElementById("post-section");
   const aboutSection = document.getElementById("about-section");
-  const adminHeader = document.querySelector(".admin-header");
 
   const loginForm = document.getElementById("login-form");
   const loginMessage = document.getElementById("login-message");
@@ -294,7 +293,6 @@ function runAdminPage() {
   function setLoginState(user, scrollToPost = false) {
     if (user) {
       // show admin ui
-      adminHeader?.classList.remove("hidden");
       loginSection.classList.add("hidden");
       postSection.classList.remove("hidden");
       aboutSection.classList.remove("hidden");
@@ -311,7 +309,6 @@ function runAdminPage() {
       }
     } else {
       // logged out: only show login
-      adminHeader?.classList.add("hidden");
       loginSection.classList.remove("hidden");
       postSection.classList.add("hidden");
       aboutSection.classList.add("hidden");
