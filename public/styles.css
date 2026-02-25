@@ -29,10 +29,8 @@
 
 /* top header */
 [data-page="admin"] .admin-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 10px;
+  position: relative;
+  display: block;
   margin: 0;
   padding: 0;
   border: 0;
@@ -43,6 +41,7 @@
   flex-direction: column;
   align-items: flex-start;
   min-width: 0;
+  padding-right: 180px;
 }
 
 [data-page="admin"] .admin-header h1,
@@ -57,8 +56,10 @@
 }
 
 [data-page="admin"] #logout-button {
-  margin-left: auto;
-  margin-top: -3px;
+  position: absolute;
+  top: -3px;
+  right: 0;
+  margin: 0;
 }
 
 [data-page="admin"] .subtitle {
@@ -406,10 +407,6 @@ body[data-page="index"] .panel {
   padding: 8px 0 0;
   margin-bottom: 16px;
   background: transparent;
-}
-
-body[data-page="index"] #admin.panel {
-  padding-top: 12px;
 }
 
 /* about */
