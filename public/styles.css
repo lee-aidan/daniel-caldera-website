@@ -408,6 +408,10 @@ body[data-page="index"] .panel {
   background: transparent;
 }
 
+body[data-page="index"] #admin.panel {
+  padding-top: 12px;
+}
+
 /* about */
 body[data-page="index"] #about h2,
 body[data-page="index"] #reviews h2,
