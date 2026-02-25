@@ -14,24 +14,8 @@
 
   <!-- data-page used for page-specific logic/styles -->
   <body data-page="index">
-    <!-- welcome overlay -->
-    <section id="welcome-layer" class="welcome-root">
-      <div class="welcome-panel">
-        <h1 class="welcome-title">big dan's blog</h1>
-        <p class="welcome-subtitle">unfiltered takes on film &amp; tv</p>
-
-        <p class="welcome-body">
-          welcome! this is a small corner of the internet where dan keeps track
-          of what he’s watching—the films, series, and moments that stand out.
-          glad you're here.
-        </p>
-
-        <button id="enterButton" class="button-primary">enter</button>
-      </div>
-    </section>
-
     <!-- main app -->
-    <div id="app-layer" class="page-root hidden">
+    <div id="app-layer" class="page-root">
       <header>
         <div class="header-top">
           <div>
@@ -44,10 +28,9 @@
         <nav>
           <button class="tab-button active" data-target="about">about</button>
           <button class="tab-button" data-target="reviews">reviews</button>
-
           <span class="nav-spacer"></span>
+          <button class="tab-button" data-target="admin">admin</button>
 
-          <a href="admin.html" class="tab-link">admin</a>
         </nav>
       </header>
 
@@ -66,6 +49,129 @@
         <section id="reviews" class="panel hidden">
           <h2>reviews</h2>
           <div id="posts"></div>
+        </section>
+
+        <!-- admin tab (embedded, no redirect) -->
+        <section id="admin" class="panel hidden">
+          <h2 class="tab-panel-title">admin</h2>
+          <div data-page="admin" class="admin-embedded-root">
+            <div class="page">
+              <header class="admin-header hidden">
+                <button
+                  id="logout-button"
+                  class="button button-secondary hidden"
+                  type="button"
+                >
+                  sign out
+                </button>
+              </header>
+
+              <section class="card hidden" id="login-section">
+                <form id="login-form">
+                  <div class="field">
+                    <label for="login-email">email</label>
+                    <input
+                      id="login-email"
+                      type="email"
+                      autocomplete="email"
+                      required
+                    />
+                  </div>
+
+                  <div class="field">
+                    <label for="login-password">password</label>
+                    <input
+                      id="login-password"
+                      type="password"
+                      autocomplete="current-password"
+                      required
+                    />
+                  </div>
+
+                  <button type="submit" class="button">continue</button>
+                  <div id="login-message"></div>
+                </form>
+              </section>
+
+              <p class="logged-in-note" id="user-info"></p>
+
+              <section class="card hidden" id="about-section">
+                <h2 class="section-title">edit about page</h2>
+
+                <form id="about-form">
+                  <div class="field">
+                    <label for="about-content">about text</label>
+                    <textarea
+                      id="about-content"
+                      placeholder="write the about page text here..."
+                      required
+                    ></textarea>
+                  </div>
+
+                  <button type="submit" class="button">save about page</button>
+                  <div id="about-message"></div>
+                </form>
+              </section>
+
+              <section class="card hidden" id="post-section">
+                <h2 class="section-title">new review</h2>
+
+                <form id="post-form">
+                  <div class="field">
+                    <label for="post-title">title</label>
+                    <input
+                      id="post-title"
+                      type="text"
+                      placeholder="review title"
+                      required
+                    />
+                  </div>
+
+                  <div class="field">
+                    <label for="post-media-title">
+                      film / show title (for poster)
+                    </label>
+                    <input
+                      id="post-media-title"
+                      type="text"
+                      placeholder="e.g. Regular Show"
+                    />
+                  </div>
+
+                  <div class="field">
+                    <label for="post-content">content</label>
+                    <textarea
+                      id="post-content"
+                      placeholder="thoughts, reactions, notes..."
+                      required
+                    ></textarea>
+                  </div>
+
+                  <div class="actions-row">
+                    <button
+                      type="submit"
+                      class="button"
+                      id="post-submit-button"
+                    >
+                      publish review
+                    </button>
+
+                    <button
+                      type="button"
+                      class="button button-secondary hidden"
+                      id="cancel-edit-button"
+                    >
+                      cancel edit
+                    </button>
+                  </div>
+
+                  <div id="post-message"></div>
+                </form>
+
+                <div class="post-list" id="post-list"></div>
+              </section>
+            </div>
+          </div>
         </section>
       </main>
 

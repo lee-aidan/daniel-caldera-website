@@ -7,6 +7,15 @@
   },
   "hosting": {
     "public": "public",
+    "rewrites": [
+      {
+        "source": "/api/tmdb-poster",
+        "function": {
+          "functionId": "tmdbPosterLookup",
+          "region": "us-central1"
+        }
+      }
+    ],
     "ignore": [
       "firebase.json",
       "**/.*",

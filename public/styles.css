@@ -1,7 +1,7 @@
 /* --------------------
    admin
 -------------------- */
-body[data-page="admin"] {
+[data-page="admin"] {
   /* base type + colors */
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
     "SF Pro Display", "Segoe UI", sans-serif;
@@ -9,65 +9,85 @@ body[data-page="admin"] {
   background: #fafafa;
 }
 
-body[data-page="admin"] * {
+[data-page="admin"] * {
   /* predictable sizing */
   box-sizing: border-box;
 }
 
-body[data-page="admin"] {
+[data-page="admin"] {
   /* page layout */
   margin: 0;
-  padding: 24px 16px 40px;
+  padding: 48px 24px 40px;
   -webkit-font-smoothing: antialiased;
 }
 
-body[data-page="admin"] .page {
+[data-page="admin"] .page {
   /* centered column */
   max-width: 720px;
   margin: 0 auto;
 }
 
 /* top header */
-body[data-page="admin"] .admin-header {
+[data-page="admin"] .admin-header {
   display: flex;
+  justify-content: flex-end;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-
-  padding-bottom: 8px;
-  border-bottom: 1px solid #e3e3e3;
-  margin-bottom: 8px;
+  gap: 10px;
+  margin: 0 0 4px;
+  padding: 0;
+  border: 0;
 }
 
-body[data-page="admin"] h1 {
-  font-size: 24px;
+[data-page="admin"] .admin-header h1 {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
   margin: 0;
+  line-height: 1;
+  text-align: left;
 }
 
-body[data-page="admin"] .subtitle {
+[data-page="admin"] #logout-button {
+  margin-left: auto;
+}
+
+[data-page="admin"] .subtitle {
   margin: 0 0 24px;
   font-size: 13px;
   color: #666666;
 }
 
-body[data-page="admin"] .card {
-  /* section divider */
-  padding: 16px 0;
-  border-top: 1px solid #e3e3e3;
-  margin-top: 16px;
+[data-page="admin"] .card {
+  /* match index panel spacing (avoid double rule under header) */
+  padding: 8px 0 0;
+  margin: 0 0 16px;
 }
 
-body[data-page="admin"] label {
+[data-page="admin"] #post-section {
+  padding-top: 16px;
+  margin-top: 8px;
+  border-top: 1px solid #e3e3e3;
+}
+
+[data-page="admin"] .section-title {
+  margin: 4px 0 6px;
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+
+[data-page="admin"] label {
   display: block;
   font-size: 13px;
   margin-bottom: 4px;
 }
 
 /* shared input styles */
-body[data-page="admin"] input[type="email"],
-body[data-page="admin"] input[type="password"],
-body[data-page="admin"] input[type="text"],
-body[data-page="admin"] textarea {
+[data-page="admin"] input[type="email"],
+[data-page="admin"] input[type="password"],
+[data-page="admin"] input[type="text"],
+[data-page="admin"] textarea {
   width: 100%;
   max-width: 100%;
   padding: 8px 10px;
@@ -78,16 +98,16 @@ body[data-page="admin"] textarea {
   background: #ffffff;
 }
 
-body[data-page="admin"] textarea {
+[data-page="admin"] textarea {
   min-height: 140px;
   resize: vertical;
 }
 
-body[data-page="admin"] .field {
+[data-page="admin"] .field {
   margin-bottom: 12px;
 }
 
-body[data-page="admin"] .button {
+[data-page="admin"] .button {
   /* pill buttons */
   display: inline-flex;
   align-items: center;
@@ -107,66 +127,67 @@ body[data-page="admin"] .button {
   transition: background 0.1s ease, transform 0.08s ease;
 }
 
-body[data-page="admin"] .button:hover {
+[data-page="admin"] .button:hover {
   background: #000000;
   transform: translateY(-1px);
 }
 
-body[data-page="admin"] .button:active {
+[data-page="admin"] .button:active {
   transform: translateY(0);
 }
 
 /* secondary pill (cancel edit + sign out) */
-body[data-page="admin"] .button-secondary {
+[data-page="admin"] .button-secondary {
   background: #ffffff;
   color: #111111;
 }
 
-body[data-page="admin"] .button-secondary:hover {
+[data-page="admin"] .button-secondary:hover {
   background: #f4f4f4;
   transform: translateY(-1px);
 }
 
-body[data-page="admin"] .error {
+[data-page="admin"] .error {
   color: #b91c1c;
   font-size: 13px;
   margin-top: 6px;
 }
 
-body[data-page="admin"] .success {
+[data-page="admin"] .success {
   color: #166534;
   font-size: 13px;
   margin-top: 6px;
 }
 
-body[data-page="admin"] .logged-in-note {
+[data-page="admin"] .logged-in-note {
   font-size: 13px;
   color: #555555;
   margin: 8px 0 16px;
 }
 
-body[data-page="admin"] .hidden {
+[data-page="admin"] .hidden {
   display: none !important;
 }
 
 /* button row under the review form */
-body[data-page="admin"] .actions-row {
+[data-page="admin"] .actions-row {
   display: flex;
   gap: 8px;
   align-items: center;
+  flex-wrap: wrap;
 
   margin-top: 4px;
   margin-bottom: 4px;
 }
 
 /* post list */
-body[data-page="admin"] .post-list {
+[data-page="admin"] .post-list {
   margin-top: 16px;
   border-top: 1px solid #e3e3e3;
   padding-top: 12px;
 }
 
-body[data-page="admin"] .post-row {
+[data-page="admin"] .post-row {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -176,17 +197,17 @@ body[data-page="admin"] .post-row {
   border-bottom: 1px solid #f0f0f0;
 }
 
-body[data-page="admin"] .post-row-main {
+[data-page="admin"] .post-row-main {
   flex: 1;
   min-width: 0;
 }
 
-body[data-page="admin"] .post-row-title {
+[data-page="admin"] .post-row-title {
   font-size: 14px;
   margin: 0 0 2px;
 }
 
-body[data-page="admin"] .post-row-title span.pinned-badge {
+[data-page="admin"] .post-row-title span.pinned-badge {
   font-size: 11px;
   text-transform: lowercase;
   letter-spacing: 0.04em;
@@ -194,13 +215,13 @@ body[data-page="admin"] .post-row-title span.pinned-badge {
   color: #777777;
 }
 
-body[data-page="admin"] .post-row-meta {
+[data-page="admin"] .post-row-meta {
   font-size: 11px;
   color: #777777;
   margin: 0;
 }
 
-body[data-page="admin"] .post-row-actions {
+[data-page="admin"] .post-row-actions {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -208,7 +229,7 @@ body[data-page="admin"] .post-row-actions {
   white-space: nowrap;
 }
 
-body[data-page="admin"] .small-button {
+[data-page="admin"] .small-button {
   /* edit/pin links */
   border: none;
   background: transparent;
@@ -219,11 +240,11 @@ body[data-page="admin"] .small-button {
   cursor: pointer;
 }
 
-body[data-page="admin"] .small-button:hover {
+[data-page="admin"] .small-button:hover {
   text-decoration: underline;
 }
 
-body[data-page="admin"] .delete-button {
+[data-page="admin"] .delete-button {
   /* delete link */
   border: none;
   background: transparent;
@@ -234,8 +255,20 @@ body[data-page="admin"] .delete-button {
   cursor: pointer;
 }
 
-body[data-page="admin"] .delete-button:hover {
+[data-page="admin"] .delete-button:hover {
   text-decoration: underline;
+}
+
+/* embedded admin tab inside index page should use index page width/padding */
+body[data-page="index"] .admin-embedded-root[data-page="admin"] {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+body[data-page="index"] .admin-embedded-root[data-page="admin"] .page {
+  max-width: none;
+  margin: 0;
 }
 
 /* --------------------
@@ -262,79 +295,6 @@ body[data-page="index"] {
 
 body[data-page="index"] .hidden {
   display: none !important;
-}
-
-/* welcome (every visit) */
-body[data-page="index"] .welcome-root {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-}
-
-body[data-page="index"] .welcome-panel {
-  max-width: 540px;
-  width: 100%;
-
-  padding: 24px 0;
-  text-align: left;
-}
-
-body[data-page="index"] .welcome-title {
-  font-size: 32px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: lowercase;
-  margin: 0 0 8px;
-}
-
-body[data-page="index"] .welcome-subtitle {
-  margin: 0 0 20px;
-  font-size: 15px;
-  color: #111111;
-}
-
-body[data-page="index"] .welcome-body {
-  margin: 0 0 16px;
-  font-size: 15px;
-  line-height: 1.6;
-  text-align: justify;
-  color: #111111;
-}
-
-body[data-page="index"] .welcome-meta {
-  margin: 0 0 20px;
-  font-size: 13px;
-  color: #555555;
-}
-
-body[data-page="index"] .button-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 8px 18px;
-  border-radius: 999px;
-
-  border: 1px solid #111111;
-  background: #111111;
-  color: #fafafa;
-
-  font-size: 14px;
-  font-weight: 500;
-
-  cursor: pointer;
-  transition: background 0.1s ease, color 0.1s ease, transform 0.08s ease;
-}
-
-body[data-page="index"] .button-primary:hover {
-  background: #000000;
-  transform: translateY(-1px);
-}
-
-body[data-page="index"] .button-primary:active {
-  transform: translateY(0);
 }
 
 /* main app */
@@ -432,7 +392,8 @@ body[data-page="index"] .panel {
 
 /* about */
 body[data-page="index"] #about h2,
-body[data-page="index"] #reviews h2 {
+body[data-page="index"] #reviews h2,
+body[data-page="index"] .tab-panel-title {
   margin: 4px 0 6px;
   font-size: 18px;
   font-weight: 600;
@@ -445,6 +406,10 @@ body[data-page="index"] .about-body p {
   line-height: 1.6;
   white-space: pre-wrap;
   color: #111111;
+}
+
+body[data-page="index"] .about-body {
+  margin-top: 12px;
 }
 
 body[data-page="index"] #about-text {
@@ -490,6 +455,10 @@ body[data-page="index"] .empty-message {
   margin: 10px 0 0;
   font-size: 13px;
   color: #777777;
+}
+
+body[data-page="index"] #posts {
+  margin-top: 12px;
 }
 
 body[data-page="index"] footer {

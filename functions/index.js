@@ -1,15 +1,5 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
-
 const {setGlobalOptions} = require("firebase-functions");
-const {onRequest} = require("firebase-functions/https");
-const logger = require("firebase-functions/logger");
+const {onRequest} = require("firebase-functions/v2/https");
 
 // For cost control, you can set the maximum number of containers that can be
 // running at the same time. This helps mitigate the impact of unexpected
@@ -21,12 +11,59 @@ const logger = require("firebase-functions/logger");
 // functions should each use functions.runWith({ maxInstances: 10 }) instead.
 // In the v1 API, each function can only serve one request per container, so
 // this will be the maximum concurrent request count.
-setGlobalOptions({ maxInstances: 10 });
+setGlobalOptions({maxInstances: 10});
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
+exports.tmdbPosterLookup = onRequest(
+    {cors: true},
+    async (request, response) => {
+      if (request.method !== "GET") {
+        response.status(405).json({error: "method_not_allowed"});
+        return;
+      }
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+      const rawTitle = typeof request.query.title === "string" ?
+        request.query.title : "";
+      const title = rawTitle.trim();
+
+      if (!title) {
+        response.status(400).json({error: "missing_title"});
+        return;
+      }
+
+      const apiKey = process.env.TMDB_API_KEY;
+      if (!apiKey) {
+        response.status(500).json({error: "missing_tmdb_api_key"});
+        return;
+      }
+
+      try {
+        const url = new URL("https://api.themoviedb.org/3/search/multi");
+        url.searchParams.set("api_key", apiKey);
+        url.searchParams.set("query", title);
+
+        const tmdbRes = await fetch(url);
+        if (!tmdbRes.ok) {
+          response.status(tmdbRes.status).json({error: "tmdb_request_failed"});
+          return;
+        }
+
+        const json = await tmdbRes.json();
+        const results = Array.isArray(json.results) ? json.results : [];
+        const matchWithPoster = results.find((item) => item?.poster_path);
+
+        if (!matchWithPoster?.poster_path) {
+          response.set("Cache-Control", "public, max-age=300");
+          response.json({posterUrl: null});
+          return;
+        }
+
+        response.set("Cache-Control", "public, max-age=3600");
+        response.json({
+          posterUrl: `https://image.tmdb.org/t/p/w500${matchWithPoster.poster_path}`,
+        });
+      } catch (error) {
+        console.error("tmdbPosterLookup failed", error);
+        response.status(500).json({error: "internal_error"});
+      }
+    }
+);

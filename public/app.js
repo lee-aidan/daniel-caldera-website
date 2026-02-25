@@ -39,40 +39,41 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
+const TMDB_POSTER_LOOKUP_ENDPOINT = "/api/tmdb-poster";
+
+function formatDateOnly(ts) {
+  try {
+    return ts.toDate().toLocaleDateString();
+  } catch {
+    return "";
+  }
+}
 
 /* ============================================================
    admin page
    ============================================================ */
 
 function runAdminPage() {
-  const TMDB_API_KEY = "99d2b566ed84053f039ef7bb723492fb";
+  if (runAdminPage.initialized) return;
 
-  // look up a poster image for a given title 
+  // look up a poster image for a given title (server-side TMDB key)
   async function fetchPosterUrlForTitle(title) {
-    if (!title || !TMDB_API_KEY) return null;
-
-    const url = `https://api.themoviedb.org/3/search/multi?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(
-      title
-    )}`;
+    if (!title) return null;
 
     try {
+      const url = `${TMDB_POSTER_LOOKUP_ENDPOINT}?title=${encodeURIComponent(
+        title
+      )}`;
       const res = await fetch(url);
       if (!res.ok) {
-        console.error("tmdb error:", res.status, res.statusText);
+        console.error("poster lookup error:", res.status, res.statusText);
         return null;
       }
 
       const json = await res.json();
-      if (!json.results || !json.results.length) return null;
-
-      // prefer a result with an actual poster
-      const firstWithPoster =
-        json.results.find((r) => r.poster_path) || json.results[0];
-
-      if (!firstWithPoster.poster_path) return null;
-      return `https://image.tmdb.org/t/p/w500${firstWithPoster.poster_path}`;
+      return typeof json.posterUrl === "string" ? json.posterUrl : null;
     } catch (err) {
-      console.error("error fetching tmdb poster:", err);
+      console.error("error fetching poster:", err);
       return null;
     }
   }
@@ -81,6 +82,7 @@ function runAdminPage() {
   const loginSection = document.getElementById("login-section");
   const postSection = document.getElementById("post-section");
   const aboutSection = document.getElementById("about-section");
+  const adminHeader = document.querySelector(".admin-header");
 
   const loginForm = document.getElementById("login-form");
   const loginMessage = document.getElementById("login-message");
@@ -98,6 +100,18 @@ function runAdminPage() {
   const aboutMessage = document.getElementById("about-message");
 
   const mediaTitleInput = document.getElementById("post-media-title");
+  if (
+    !loginSection ||
+    !postSection ||
+    !aboutSection ||
+    !loginForm ||
+    !postForm ||
+    !aboutForm
+  ) {
+    return;
+  }
+
+  runAdminPage.initialized = true;
 
   // edit state
   let editingId = null;
@@ -142,15 +156,6 @@ function runAdminPage() {
 
     postMessage.textContent = "";
     postMessage.className = "";
-  }
-
-  // timestamp -> local date string (no time)
-  function formatDateOnly(ts) {
-    try {
-      return ts.toDate().toLocaleDateString();
-    } catch {
-      return "";
-    }
   }
 
   // load + render all posts for admin list (pinned first)
@@ -289,6 +294,7 @@ function runAdminPage() {
   function setLoginState(user, scrollToPost = false) {
     if (user) {
       // show admin ui
+      adminHeader?.classList.remove("hidden");
       loginSection.classList.add("hidden");
       postSection.classList.remove("hidden");
       aboutSection.classList.remove("hidden");
@@ -305,6 +311,7 @@ function runAdminPage() {
       }
     } else {
       // logged out: only show login
+      adminHeader?.classList.add("hidden");
       loginSection.classList.remove("hidden");
       postSection.classList.add("hidden");
       aboutSection.classList.add("hidden");
@@ -530,14 +537,6 @@ function runIndexPage() {
       const pinned = all.filter((p) => p.data.pinned === true);
       const unpinned = all.filter((p) => !p.data.pinned);
 
-      function formatDateOnly(ts) {
-        try {
-          return ts.toDate().toLocaleDateString();
-        } catch {
-          return "";
-        }
-      }
-
       // card html for a single post
       const renderCard = ({ id, data }) => {
         const dateStr =
@@ -569,13 +568,19 @@ function runIndexPage() {
   }
 
   // grab ui elements
-  const welcomeLayer = document.getElementById("welcome-layer");
   const appLayer = document.getElementById("app-layer");
-  const enterButton = document.getElementById("enterButton");
 
   const tabButtons = document.querySelectorAll(".tab-button");
   const aboutSection = document.getElementById("about");
   const reviewsSection = document.getElementById("reviews");
+  const adminSection = document.getElementById("admin");
+  let adminTabInitialized = false;
+
+  function ensureAdminTabReady() {
+    if (adminTabInitialized || !adminSection) return;
+    runAdminPage();
+    adminTabInitialized = true;
+  }
 
   // switch panels and trigger data loads
   function setActiveTab(tabName) {
@@ -586,18 +591,27 @@ function runIndexPage() {
     if (tabName === "about") {
       aboutSection.classList.remove("hidden");
       reviewsSection.classList.add("hidden");
+      adminSection?.classList.add("hidden");
       loadAbout();
+      return;
+    }
+
+    if (tabName === "admin") {
+      aboutSection.classList.add("hidden");
+      reviewsSection.classList.add("hidden");
+      adminSection?.classList.remove("hidden");
+      ensureAdminTabReady();
       return;
     }
 
     aboutSection.classList.add("hidden");
     reviewsSection.classList.remove("hidden");
+    adminSection?.classList.add("hidden");
     loadPosts();
   }
 
-  // hide welcome overlay and show app
+  // show app and activate a tab
   function showAppLayer(defaultTab = "about") {
-    welcomeLayer.classList.add("hidden");
     appLayer.classList.remove("hidden");
     setActiveTab(defaultTab);
   }
@@ -605,20 +619,19 @@ function runIndexPage() {
   // initial view based on url hash
   if (window.location.hash === "#reviews") {
     showAppLayer("reviews");
+  } else if (window.location.hash === "#admin") {
+    showAppLayer("admin");
   } else {
-    welcomeLayer.classList.remove("hidden");
-    appLayer.classList.add("hidden");
-  }
-
-  // enter -> show app + about
-  enterButton.addEventListener("click", () => {
     showAppLayer("about");
-  });
+  }
 
   // tab clicks
   tabButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      setActiveTab(btn.dataset.target);
+      const target = btn.dataset.target;
+      setActiveTab(target);
+      window.location.hash =
+        target === "about" ? "" : target;
     });
   });
 }
