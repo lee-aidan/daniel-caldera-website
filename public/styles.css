@@ -73,6 +73,7 @@
   margin: 0 0 16px;
 }
 
+[data-page="admin"] #about-section,
 [data-page="admin"] #post-section {
   padding-top: 16px;
   margin-top: 8px;
