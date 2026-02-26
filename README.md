@@ -1,57 +1,73 @@
 # Big Dan’s Blog
 
-Big Dan’s Blog is a full-stack web application built to publish and manage movie and television reviews. The site includes a public-facing blog for readers and a secure admin interface designed to give the site owner complete control over all content without requiring access to the source code. All content creation, editing, and removal is handled through a protected admin page designed for a non-technical user.
+Big Dan’s Blog is a full-stack web app for publishing and managing movie and television reviews. It includes a public-facing blog for readers and a secure admin interface that lets the site owner create, edit, pin, and delete content without touching the codebase.
 
-This project was the first website I've ever built. It serves as both a functional product for my friend Daniel and as a hands-on learning exercise in end-to-end web development and real-world application design. In the process, I learned how front-end code communicates with backend services as well as how deployed applications are hosted and connected to a live domain.
+This was the first website I ever built. I created it as a real product for my friend Daniel and as a hands-on learning project in end-to-end web development. Building it taught me how front-end interfaces connect to backend services, how authentication protects admin workflows, and how deployed applications are hosted and maintained on a live domain.
 
-All HTML, CSS, JavaScript, and Firebase integration was self-taught and written entirely by me. 
+All HTML, CSS, JavaScript, and Firebase integration was self-taught and written by me.
 
 ---
 
-## HTML Development
+## Project Highlights
 
-The site’s HTML is structured as a clean “shell” that JavaScript fills in at runtime. On the homepage (index.html), the app renders inside two main layers: a welcome overlay (#welcome-layer) and the main application container (#app-layer). The “enter” button reveals the app layer, and the page uses simple, predictable IDs (#about-text, #about-status, and #posts) as target anchors where app.js injects the bio text, status messages, and the list of review cards. Navigation is implemented using tab-style buttons (.tab-button with data-target="about" / data-target="reviews") so the UI can switch panels without navigating to new pages, while the dedicated admin.html route is linked separately for protected editing.
+- Public blog for browsing reviews
+- Secure admin interface for content management
+- Firebase Authentication for protected editing access
+- Firestore for persistent content storage (reviews + about page)
+- TMDB integration for automatic poster fetching
+- Vanilla HTML/CSS/JavaScript (no front-end framework)
 
-#### from `index.html`:
+---
+
+## HTML Architecture
+
+The app uses a lightweight HTML “shell” approach: pages provide structure and predictable DOM targets, and JavaScript loads content dynamically at runtime.
+
+### Example: tab-based UI + content targets (`index.html`)
 
 ```html
-<section id="welcome-layer" class="welcome-root">
-  <div class="welcome-panel">
-    <h1 class="welcome-title">big dan's blog</h1>
-    <p class="welcome-subtitle">unfiltered takes on film &amp; tv</p>
-    <button id="enterButton" class="button-primary">enter</button>
+<nav>
+  <button class="tab-button active" data-target="about">about</button>
+  <button class="tab-button" data-target="reviews">reviews</button>
+  <span class="nav-spacer"></span>
+  <button class="tab-button" data-target="admin">admin</button>
+</nav>
+
+<section id="about" class="panel">
+  <h2>about</h2>
+  <div class="about-body">
+    <p id="about-text"></p>
+    <p id="about-status" class="about-status"></p>
   </div>
 </section>
 
-<div id="app-layer" class="page-root hidden">
-  <nav>
-    <button class="tab-button active" data-target="about">about</button>
-    <button class="tab-button" data-target="reviews">reviews</button>
-    <span class="nav-spacer"></span>
-    <a href="admin.html" class="tab-link">admin</a>
-  </nav>
-
-  <section id="about" class="panel">
-    <p id="about-text"></p>
-    <p id="about-status" class="about-status"></p>
-  </section>
-
-  <section id="reviews" class="panel hidden">
-    <div id="posts"></div>
-  </section>
-</div>
+<section id="reviews" class="panel hidden">
+  <h2>reviews</h2>
+  <div id="posts"></div>
+</section>
 ```
+
+This keeps the markup simple while making the JavaScript logic easy to target and maintain.
 
 ---
 
-## CSS Development
+## CSS Approach
 
-Styling is handled in a single stylesheet (styles.css) using a page-scoped approach based on the data-page attribute (for example: body[data-page="index"], body[data-page="admin"], and body[data-page="post"]). This keeps styles isolated so the admin UI can look intentionally “tool-like” and minimal, while the public pages stay clean and readable. Reusable UI patterns (pill buttons, tab navigation, spacing rhythm, typography rules, and card-like layout sections) are defined per page without relying on frameworks, and layout is kept consistent by centering content in a fixed-width column (max-width: 720px) across the main views. The index page emphasizes typography and lightweight navigation, while the admin page adds structured form styling, action rows, and list-row controls for editing and deleting posts.
+Styling is managed in a single styles.css file using page-scoped selectors (data-page) so the public UI and admin UI can share one stylesheet without conflicting styles.
 
-#### from `styles.css` (page-scoped styling):
+### CSS design goals
+
+- Consistent spacing and typography across views
+- Reusable UI patterns (pill buttons, tab navigation, section dividers)
+- Fixed-width readable layout (`max-width: 720px`)
+- Minimal, tool-like admin UI for usability
+- 
+
+### Example: page-scoped admin button styling (`styles.css`)
+
 
 ```css
-body[data-page="admin"] .button {
+[data-page="admin"] .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -68,79 +84,133 @@ body[data-page="admin"] .button {
 }
 ```
 
+This approach helped me build a consistent design system without frameworks.
+
 ---
 
 ## Firebase Integration
 
-Firebase is used to support two core parts of the application: authentication and content persistence. Rather than acting as a generic backend, Firebase enables the site owner to securely manage content through the admin interface while keeping the public site read-only.
+Firebase powers the app’s authentication and data layer, allowing the site owner to manage content securely while keeping the public blog read-only.
 
-### Authentication
+### Authentication (Firebase Auth)
 
-Firebase Authentication is used to restrict access to the admin interface. Only an authenticated user can create, edit, or delete content. The admin page checks authentication state on load and conditionally reveals editing controls once a valid session is established. This allows Daniel to manage the site without exposing the underlying source code or deployment setup.
+Firebase Authentication restricts admin functionality so only signed-in users can create, edit, or delete content.
 
-Authentication logic lives in app.js and is initialized as soon as the admin page loads. If a user is not authenticated, the admin tools remain hidden, and the login form is shown instead.
-
-#### from `app.js` (auth state handling):
+### Example: auth state controls admin UI (`app.js`)
 
 ```js
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    adminUI.classList.remove("hidden");
-    loginForm.classList.add("hidden");
+    loginSection.classList.add("hidden");
+    postSection.classList.remove("hidden");
+    aboutSection.classList.remove("hidden");
+    logoutButton.classList.remove("hidden");
+    userInfo.textContent = `signed in as ${user.email}`;
   } else {
-    adminUI.classList.add("hidden");
-    loginForm.classList.remove("hidden");
+    loginSection.classList.remove("hidden");
+    postSection.classList.add("hidden");
+    aboutSection.classList.add("hidden");
+    logoutButton.classList.add("hidden");
+    userInfo.textContent = "";
   }
 });
 ```
-This approach cleanly separates who can write from who can read, without adding unnecessary complexity.
 
-### Databases (Firestore)
+This keeps the admin workflow simple for a non-technical user while protecting write access.
 
-Firebase Firestore is used to persist all site content, including blog posts and the "about" page bio. Posts are stored as documents in a collection, while the bio text is stored as a single document. This allows all public-facing content to be updated dynamically without redeploying the site.
+---
 
-On the public homepage, content is fetched from Firestore and injected into the DOM at runtime. On the admin page, edits are written back to Firestore and reflected immediately on the public site.
+## Firestore (Content Storage)
 
-#### from `app.js` (fetching posts):
+Firestore stores:
+
+- Review posts (documents in a `posts` collection)
+
+- About page content (document in a site/settings-style location)
+
+Public pages read from Firestore and render content dynamically. Admin edits write directly to Firestore, so updates appear without redeploying the site.
+
+### Example: fetching posts for the reviews tab (`app.js`)
 
 ```js
-const q = query(postsRef, orderBy("createdAt", "desc"));
+const postsQuery = query(
+  collection(db, "posts"),
+  orderBy("createdAt", "desc")
+);
 
-onSnapshot(q, (snapshot) => {
-  postsContainer.innerHTML = "";
-  snapshot.forEach((doc) => {
-    renderPost(doc.data(), doc.id);
-  });
-});
+const snapshot = await getDocs(postsQuery);
+
+if (snapshot.empty) {
+  container.innerHTML = '<p class="empty-message">no reviews yet.</p>';
+  return;
+}
 ```
-
-This real-time listener keeps the UI in sync with the database and avoids manual refresh logic.
 
 ---
 
 ## Movie Poster Fetching (TMDB)
 
-To enhance each review visually without adding extra work for the site owner, the app automatically fetches movie or TV posters using The Movie Database (TMDB) API. When creating or editing a post, the admin enters the title of a movie or show. The application then queries TMDB, selects the most relevant result, and attaches the poster URL to the post before saving it.
+To improve the visual quality of reviews, the app automatically fetches movie/TV posters from The Movie Database (TMDB).
 
-The logic is written to tolerate small variations in titles and to fail gracefully if no poster is found. The fetching logic is designed to tolerate small variations in titles and to fail gracefully if no match is found. If the API does not return a valid result, the post still saves and renders correctly without a poster image. Once a poster is attached, its URL is persisted with the review data, ensuring that the visual remains stable over time. This prevents existing posts from changing unexpectedly if TMDB updates or releases new artwork, such as a new season poster, allowing each review to retain the poster that was originally selected.
+### How it works
 
-#### from `app.js` (poster fetch logic):
+- Admin enters a movie/show title while creating or editing a review
+- The app looks up a matching poster
+- The selected poster URL is saved with the post
+- If no poster is found, the review still saves normally
+
+Poster URLs are persisted with the review so posts keep the original artwork they were created with.
+
+### Example: poster lookup call (`app.js`)
 
 ```js
-const response = await fetch(
-  `https://api.themoviedb.org/3/search/multi?query=${encodeURIComponent(title)}&api_key=${TMDB_KEY}`
+const res = await fetch(
+  `/api/tmdb-poster?title=${encodeURIComponent(title)}`
 );
 
-const data = await response.json();
-const posterPath = data.results?.[0]?.poster_path || null;
+if (!res.ok) return null;
+
+const json = await res.json();
+return typeof json.posterUrl === "string" ? json.posterUrl : null;
 ```
 
-This feature was a natural way for me to apply my informatics background while learning JavaScript, translating structured user input into a reliable query against an external data source and integrating the result directly into the application workflow. It allowed me to practice working with external APIs in a way that emphasized robustness while keeping the admin experience simple and intuitive.
+### Example: Firebase Function proxy for TMDB (`index.js`)
+
+```js
+exports.tmdbPosterLookup = onRequest({ cors: true }, async (request, response) => {
+  const title = (request.query.title || "").trim();
+  const apiKey = process.env.TMDB_API_KEY;
+
+  if (!title) {
+    response.status(400).json({ error: "missing_title" });
+    return;
+  }
+
+  const url = new URL("https://api.themoviedb.org/3/search/multi");
+  url.searchParams.set("api_key", apiKey);
+  url.searchParams.set("query", title);
+
+  const tmdbRes = await fetch(url);
+  const json = await tmdbRes.json();
+  const results = Array.isArray(json.results) ? json.results : [];
+  const match = results.find((item) => item?.poster_path);
+
+  response.json({
+    posterUrl: match?.poster_path
+      ? `https://image.tmdb.org/t/p/w500${match.poster_path}`
+      : null
+  });
+});
+```
+
+This let me practice API integration, server-side key handling, and graceful fallbacks.
 
 ---
 
 ## tl;dr
 
-Big Dan’s Blog is a full-stack web application for publishing movie and television reviews, featuring a public blog and a secure admin interface for content management. Built from scratch using vanilla HTML, CSS, JavaScript, and Firebase, the project emphasizes clean front-end architecture, authenticated editing workflows, persistent data storage, and external API integration for poster fetching. This project was developed as a real-world learning exercise in end-to-end web development and system design.
+Big Dan’s Blog is a full-stack review platform built from scratch with vanilla HTML, CSS, JavaScript, and Firebase. It includes a public blog, a secure admin interface, Firestore-based content management, and TMDB poster integration. The project was built as a real product and as a first end-to-end web development project.
+
+
 
 
